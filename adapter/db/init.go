@@ -30,6 +30,11 @@ func NewDB(dsn string) DB {
 		&PostCategory{},
 		&Post{},
 		&Comment{},
+		&Role{},
+		&Permission{},
+		&Province{},
+		&City{},
+		&Address{},
 	}
 
 	if migrationErr := database.AutoMigrate(entities...); migrationErr != nil {

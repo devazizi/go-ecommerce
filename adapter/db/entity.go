@@ -15,6 +15,7 @@ type User struct {
 	CreatedAt    time.Time      `json:"created_at"`
 	UpdatedAt    time.Time      `json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
+	Roles        []Role         `gorm:"many2many:role_user;"`
 }
 
 type ProductCategory struct {
@@ -118,12 +119,65 @@ type Post struct {
 }
 
 type Comment struct {
-	ID        int
+	ID        uint `gorm:"primarykey"`
 	UserID    int
 	User      User
-	Comment   string `gorm:"primarykey"`
+	Comment   string `gorm:"type:text"`
 	ModelID   int
 	ModelType string
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+type Role struct {
+	ID          uint         `gorm:"primarykey"`
+	Name        string       `gorm:"type:varchar(250)"`
+	CreatedAt   time.Time    `json:"created_at"`
+	UpdatedAt   time.Time    `json:"updated_at"`
+	Permissions []Permission `gorm:"many2many:permission_role;"`
+	Users       []User       `gorm:"many2many:role_user;"`
+}
+
+type Permission struct {
+	ID        uint      `gorm:"primarykey"`
+	Name      string    `gorm:"type:varchar(250)"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Roles     []Role    `gorm:"many2many:permission_role;"`
+}
+
+type Province struct {
+	ID        uint      `gorm:"primarykey"`
+	Name      string    `gorm:"type:varchar(250)"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type City struct {
+	ID         uint `gorm:"primarykey"`
+	ProvinceID int
+	Name       string    `gorm:"type:varchar(250)"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+	Province   Province
+}
+
+type Address struct {
+	ID          uint `gorm:"primarykey"`
+	CityID      int
+	Name        string    `gorm:"type:varchar(250)"`
+	Description string    `gorm:"type:text"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	City        City
+}
+
+//
+//type Transaction struct {
+//	ID        uint   `gorm:"primarykey"`
+//	Title     string `gorm:"type:varchar(250)"`
+//	OrderID   uint
+//	Order     Order
+//	CreatedAt time.Time `json:"created_at"`
+//	UpdatedAt time.Time `json:"updated_at"`
+//}
