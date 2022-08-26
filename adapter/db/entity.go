@@ -17,13 +17,24 @@ type User struct {
 	DeletedAt    gorm.DeletedAt `gorm:"index"`
 }
 
-type Product struct {
+type ProductCategory struct {
 	ID          uint   `gorm:"primarykey"`
 	Name        string `gorm:"type:varchar(250)"`
 	Description string
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
+}
+
+type Product struct {
+	ID                uint   `gorm:"primarykey"`
+	Name              string `gorm:"type:varchar(250)"`
+	Description       string
+	ProductCategoryID int
+	ProductCategory   ProductCategory
+	CreatedAt         time.Time      `json:"created_at"`
+	UpdatedAt         time.Time      `json:"updated_at"`
+	DeletedAt         gorm.DeletedAt `gorm:"index"`
 }
 
 type ProductVariation struct {
@@ -89,4 +100,30 @@ type RefundItem struct {
 	Refund     Refund
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type PostCategory struct {
+	ID        uint      `gorm:"primarykey"`
+	Name      string    `gorm:"type:varchar(250)"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Post struct {
+	ID        uint   `gorm:"primarykey"`
+	Title     string `gorm:"type:varchar(250)"`
+	content   string
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Comment struct {
+	ID        int
+	UserID    int
+	User      User
+	Comment   string `gorm:"primarykey"`
+	ModelID   int
+	ModelType string
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

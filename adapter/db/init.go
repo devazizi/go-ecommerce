@@ -27,6 +27,9 @@ func NewDB(dsn string) DB {
 		&OrderItem{},
 		&Refund{},
 		&RefundItem{},
+		&PostCategory{},
+		&Post{},
+		&Comment{},
 	}
 
 	if migrationErr := database.AutoMigrate(entities...); migrationErr != nil {
