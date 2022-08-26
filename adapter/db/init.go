@@ -6,7 +6,7 @@ import (
 )
 
 type DB struct {
-	db *gorm.DB
+	store *gorm.DB
 }
 
 func NewDB(dsn string) DB {
@@ -17,11 +17,19 @@ func NewDB(dsn string) DB {
 		panic("can not connect to db")
 	}
 
-	var entities []any
+	var entities = []any{
+		&User{},
+		&Product{},
+		&ProductVariation{},
+		&ShoppingCart{},
+		&ShoppingCartItem{},
+		&Order{},
+		&OrderItem{},
+	}
 
 	if migrationErr := database.AutoMigrate(entities...); migrationErr != nil {
 		panic("db migration fail")
 	}
 
-	return DB{db: database}
+	return DB{store: database}
 }

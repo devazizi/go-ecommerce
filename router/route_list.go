@@ -2,11 +2,13 @@ package router
 
 import (
 	"github.com/labstack/echo/v4"
+	"go-ecommerce/adapter/db"
 	"go-ecommerce/delivery/http/v1/auth"
+	"go-ecommerce/validator"
 	"net/http"
 )
 
-func RegisterRoutes(e *echo.Echo) {
+func RegisterRoutes(e *echo.Echo, database db.DB) {
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusNotFound, "not found")
@@ -15,8 +17,7 @@ func RegisterRoutes(e *echo.Echo) {
 	apiv1 := e.Group("api/v1")
 	{
 		{
-			// auth
-			apiv1.POST("/auth/register", auth.RegisterUserController())
+			apiv1.POST("/auth/register", auth.RegisterUserController(database, validator.ValidateRegisterUser))
 			//apiV1.POST("/auth/login")
 		}
 

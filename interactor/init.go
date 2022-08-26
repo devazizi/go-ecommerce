@@ -1,10 +1,12 @@
 package interactor
 
+import "go-ecommerce/contract"
+
 type Interactor struct {
-	store interface{}
+	store contract.Repository
 }
 
-func New(store interface{}) Interactor {
+func New(store contract.Repository) Interactor {
 
 	return Interactor{store: store}
 }
