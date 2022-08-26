@@ -8,9 +8,9 @@ import (
 type User struct {
 	ID           uint           `gorm:"primarykey" json:"id"`
 	Name         string         `json:"name" gorm:"type:varchar(250);"`
-	Email        string         `json:"email" gorm:"type:varchar(250);"`
-	NationalCode string         `json:"national_code" gorm:"type:varchar(20);"`
-	CellNumber   string         `json:"cell_number" gorm:"type:varchar(25);"`
+	Email        string         `json:"email" gorm:"type:varchar(250);uniqueIndex"`
+	NationalCode string         `json:"national_code" gorm:"type:varchar(20);uniqueIndex"`
+	CellNumber   string         `json:"cell_number" gorm:"type:varchar(25);uniqueIndex"`
 	Password     string         `json:"password" gorm:"type:varchar(250);"`
 	CreatedAt    time.Time      `json:"created_at"`
 	UpdatedAt    time.Time      `json:"updated_at"`
@@ -68,6 +68,25 @@ type OrderItem struct {
 	TotalPrice int
 	OrderID    int
 	Order      Order
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type Refund struct {
+	ID         uint `gorm:"primarykey"`
+	TotalPrice int
+	OrderID    int
+	Order      Order
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type RefundItem struct {
+	ID         uint `gorm:"primarykey"`
+	Quantity   int
+	TotalPrice int
+	RefundID   int
+	Refund     Refund
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
