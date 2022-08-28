@@ -27,7 +27,7 @@ func (i Interactor) StoreProductCategory(ctx context.Context, req dto.StorePostC
 func (i Interactor) IndexProductCategory(ctx context.Context) (dto.IndexProductCategoriesResponse, error) {
 	productCategories, _ := i.store.IndexProductCategories()
 
-	var productCategoriesResponse []dto.ProductCategoryResponse
+	var productCategoriesResponse = []dto.ProductCategoryResponse{}
 
 	for _, productCategory := range productCategories {
 		productCategoriesResponse = append(productCategoriesResponse, dto.ProductCategoryResponse{

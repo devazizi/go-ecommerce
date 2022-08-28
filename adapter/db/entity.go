@@ -33,6 +33,7 @@ type Product struct {
 	Description       string
 	ProductCategoryID int
 	ProductCategory   ProductCategory
+	ProductVariations []ProductVariation
 	CreatedAt         time.Time      `json:"created_at"`
 	UpdatedAt         time.Time      `json:"updated_at"`
 	DeletedAt         gorm.DeletedAt `gorm:"index"`
@@ -41,6 +42,8 @@ type Product struct {
 type ProductVariation struct {
 	ID        uint   `gorm:"primarykey"`
 	Name      string `gorm:"type:varchar(250)"`
+	ProductID uint
+	Product   Product
 	Price     int
 	Stock     int
 	CreatedAt time.Time      `json:"created_at"`
@@ -177,7 +180,18 @@ type Address struct {
 //	ID        uint   `gorm:"primarykey"`
 //	Title     string `gorm:"type:varchar(250)"`
 //	OrderID   uint
-//	Order     Order
+//	Order
 //	CreatedAt time.Time `json:"created_at"`
 //	UpdatedAt time.Time `json:"updated_at"`
 //}
+
+type AccessToken struct {
+	ID         uint `gorm:"primarykey"`
+	UserID     uint
+	User       User
+	Title      string `gorm:"type:varchar(250)"`
+	Token      string `gorm:"type:varchar(250)"`
+	ExpiryDate time.Time
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+}

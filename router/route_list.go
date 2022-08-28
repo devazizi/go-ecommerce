@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"go-ecommerce/adapter/db"
 	"go-ecommerce/delivery/http/v1/auth"
+	"go-ecommerce/delivery/http/v1/product"
 	"go-ecommerce/delivery/http/v1/product_category"
 	"go-ecommerce/validator"
 	"net/http"
@@ -30,8 +31,8 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 		}
 
 		{
-			// product
-
+			apiv1.GET("/products", product.IndexProductController(database))
+			//apiv1.GET("/products/:id", product.IndexProductController())
 		}
 
 		{

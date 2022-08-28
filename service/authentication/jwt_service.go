@@ -3,6 +3,7 @@ package authentication
 import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
+	"os"
 	"time"
 )
 
@@ -11,7 +12,7 @@ type MyJWTClaims struct {
 	UserInfo interface{}
 }
 
-var secret = []byte("secret key for my application it is just a secret")
+var secret = []byte(os.Getenv("APP_SECRET"))
 
 func CreateToken(sub string, userInfo interface{}) (string, error) {
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
@@ -20,6 +21,7 @@ func CreateToken(sub string, userInfo interface{}) (string, error) {
 		&jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(exp),
 			Subject:   sub,
+			Issuer:    os.Getenv("APP_URL"),
 		},
 		userInfo,
 	}

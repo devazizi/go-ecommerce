@@ -35,6 +35,7 @@ func NewDB(dsn string) DB {
 		&Province{},
 		&City{},
 		&Address{},
+		&AccessToken{},
 	}
 
 	if migrationErr := database.AutoMigrate(entities...); migrationErr != nil {

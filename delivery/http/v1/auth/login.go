@@ -21,11 +21,11 @@ func LoginUserController(database db.DB, validator contract.ValidateLoginUser) e
 			return echo.NewHTTPError(http.StatusUnprocessableEntity, validateErr.Error())
 		}
 
-		_, err := interactor.New(database).LoginUser(e.Request().Context(), requestStruct)
+		loginInfo, err := interactor.New(database).LoginUser(e.Request().Context(), requestStruct)
 		if err != nil {
 			return err
 		}
 
-		return nil
+		return e.JSON(http.StatusOK, loginInfo)
 	}
 }
