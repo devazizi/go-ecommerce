@@ -5,16 +5,18 @@ import (
 	"go-ecommerce/adapter/db"
 	"go-ecommerce/interactor"
 	"net/http"
+	"strconv"
 )
 
 func FindProductController(database db.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		productId, _ := strconv.Atoi(c.Param("id"))
 
-		products, err := interactor.New(database).IndexProduct(c.Request().Context())
+		product, err := interactor.New(database).FindProduct(uint(productId))
 		if err != nil {
 			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 		}
 
-		return c.JSON(http.StatusOK, products)
+		return c.JSON(http.StatusOK, product)
 	}
 }

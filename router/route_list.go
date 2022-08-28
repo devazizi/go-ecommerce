@@ -32,7 +32,7 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 
 		{
 			apiv1.GET("/products", product.IndexProductController(database))
-			//apiv1.GET("/products/:id", product.IndexProductController())
+			apiv1.GET("/products/:id", product.FindProductController(database))
 		}
 
 		{

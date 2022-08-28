@@ -17,4 +17,5 @@ type Repository interface {
 	GetProductCategory(productCategoryId uint) (db.ProductCategory, error)
 	// product
 	IndexProducts() ([]db.Product, error)
+	FindProduct(productId uint) (db.Product, error)
 }
