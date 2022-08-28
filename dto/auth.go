@@ -17,3 +17,17 @@ type RegisterUserResponse struct {
 	NationalCode string `json:"national_code"`
 	Token        string `json:"token"`
 }
+
+type LoginUserRequest struct {
+	CellNumber string `json:"cell_number"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+}
+
+type LoginUserResponse struct {
+	ID         uint   `json:"id"`
+	Email      string `json:"email"`
+	CellNumber string `json:"cell_number"`
+	Name       string `json:"name"`
+	Token      string `json:"token"`
+}

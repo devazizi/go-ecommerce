@@ -32,3 +32,7 @@ func (i Interactor) RegisterUser(ctx context.Context, request dto.RegisterUserRe
 		Token:        "3r23fsd3",
 	}, nil
 }
+
+func (i Interactor) LoginUser(ctx context.Context, request dto.LoginUserRequest) (dto.LoginUserResponse, error) {
+	return dto.LoginUserResponse{}, nil
+}

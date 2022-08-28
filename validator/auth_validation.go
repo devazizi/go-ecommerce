@@ -23,3 +23,25 @@ func ValidateRegisterUser(req dto.RegisterUserRequest) error {
 		validation.Field(&req.PasswordConfirm, validation.Required, validation.Length(8, 255)),
 	)
 }
+
+func ValidateLoginUser(req dto.LoginUserRequest) error {
+	return validation.ValidateStruct(
+		&req,
+		validation.Field(
+			&req.CellNumber,
+			validation.Length(11, 11),
+			validation.By(rule.RequiredEmailOrPassword(req.Email)),
+		),
+		validation.Field(
+			&req.Email,
+			is.Email,
+			validation.Length(5, 200),
+			validation.By(rule.RequiredEmailOrPassword(req.CellNumber)),
+		),
+		validation.Field(
+			&req.Password,
+			validation.Required,
+			validation.Length(8, 255),
+		),
+	)
+}

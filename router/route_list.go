@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"go-ecommerce/adapter/db"
 	"go-ecommerce/delivery/http/v1/auth"
+	"go-ecommerce/delivery/http/v1/product_category"
 	"go-ecommerce/validator"
 	"net/http"
 )
@@ -18,7 +19,14 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 	{
 		{
 			apiv1.POST("/auth/register", auth.RegisterUserController(database, validator.ValidateRegisterUser))
-			//apiV1.POST("/auth/login")
+			apiv1.POST("/auth/login", auth.LoginUserController(database, validator.ValidateLoginUser))
+		}
+
+		{
+			// product_category
+			apiv1.POST("/product-categories", product_category.StoreProductCategoryController(database, validator.ValidateStorePostCategory))
+			apiv1.GET("/product-categories", product_category.IndexProductCategoryController(database))
+			apiv1.GET("/product-categories/:id", product_category.GetProductCategoryController(database))
 		}
 
 		{
