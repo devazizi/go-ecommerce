@@ -1,10 +1,11 @@
 package dto
 
 type ProductVariation struct {
-	ID    uint   `json:"id"`
-	Name  string `json:"name"`
-	Price uint   `json:"price"`
-	Stock uint   `json:"stock"`
+	ID      uint            `json:"id"`
+	Name    string          `json:"name"`
+	Price   uint            `json:"price"`
+	Stock   uint            `json:"stock"`
+	Product ProductResponse `json:"product"`
 }
 
 type ProductVariationRequest struct {

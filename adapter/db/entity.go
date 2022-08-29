@@ -52,26 +52,29 @@ type ProductVariation struct {
 }
 
 type ShoppingCart struct {
-	ID        uint `gorm:"primarykey"`
-	UserID    int
-	User      User
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID                uint `gorm:"primarykey"`
+	UserID            uint
+	User              User
+	ShoppingCartItems []ShoppingCartItem
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
 }
 
 type ShoppingCartItem struct {
-	ID             uint `gorm:"primarykey"`
-	ShoppingCartID int
-	ShoppingCart   ShoppingCart
-	Quantity       int
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
+	ID                 uint `gorm:"primarykey"`
+	ShoppingCartID     uint
+	ProductVariationID uint
+	ShoppingCart       ShoppingCart
+	ProductVariation   ProductVariation
+	Quantity           uint
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
 }
 
 type Order struct {
 	ID         uint `gorm:"primarykey"`
-	TotalPrice int
-	UserID     int
+	TotalPrice uint
+	UserID     uint
 	User       User
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
@@ -79,9 +82,9 @@ type Order struct {
 
 type OrderItem struct {
 	ID         uint `gorm:"primarykey"`
-	Quantity   int
-	TotalPrice int
-	OrderID    int
+	Quantity   uint
+	TotalPrice uint
+	OrderID    uint
 	Order      Order
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
@@ -89,8 +92,8 @@ type OrderItem struct {
 
 type Refund struct {
 	ID         uint `gorm:"primarykey"`
-	TotalPrice int
-	OrderID    int
+	TotalPrice uint
+	OrderID    uint
 	Order      Order
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
@@ -98,9 +101,9 @@ type Refund struct {
 
 type RefundItem struct {
 	ID         uint `gorm:"primarykey"`
-	Quantity   int
-	TotalPrice int
-	RefundID   int
+	Quantity   uint
+	TotalPrice uint
+	RefundID   uint
 	Refund     Refund
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
@@ -123,10 +126,10 @@ type Post struct {
 
 type Comment struct {
 	ID        uint `gorm:"primarykey"`
-	UserID    int
+	UserID    uint
 	User      User
 	Comment   string `gorm:"type:text"`
-	ModelID   int
+	ModelID   uint
 	ModelType string
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -167,7 +170,7 @@ type City struct {
 
 type Address struct {
 	ID          uint `gorm:"primarykey"`
-	CityID      int
+	CityID      uint
 	Name        string    `gorm:"type:varchar(250)"`
 	Description string    `gorm:"type:text"`
 	CreatedAt   time.Time `json:"created_at"`

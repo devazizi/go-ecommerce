@@ -6,6 +6,7 @@ import (
 	"go-ecommerce/delivery/http/v1/auth"
 	"go-ecommerce/delivery/http/v1/product"
 	"go-ecommerce/delivery/http/v1/product_category"
+	"go-ecommerce/delivery/http/v1/shopping_cart"
 	"go-ecommerce/validator"
 	"net/http"
 )
@@ -18,6 +19,7 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 
 	apiv1 := e.Group("api/v1")
 	{
+		apiV1WithAuth := apiv1.Group("", apiAuthenticationMiddleware(database))
 		{
 			apiv1.POST("/auth/register", auth.RegisterUserController(database, validator.ValidateRegisterUser))
 			apiv1.POST("/auth/login", auth.LoginUserController(database, validator.ValidateLoginUser))
@@ -38,7 +40,7 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 		}
 
 		{
-			// shopping cart
+			apiV1WithAuth.GET("/shopping-carts", shopping_cart.GetShoppingCart(database))
 		}
 
 		{

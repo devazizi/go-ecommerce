@@ -17,4 +17,6 @@ type Intractor interface {
 	FindProduct(productId uint) (dto.ProductResponse, error)
 	StoreProduct(ctx context.Context, req dto.StoreProductRequest) (dto.ProductResponse, error)
 	DestroyProduct(ctx context.Context, productId uint) error
+
+	GetShoppingCart(ctx context.Context) (dto.ShoppingCartResponse, error)
 }

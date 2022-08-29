@@ -19,4 +19,8 @@ type Repository interface {
 	FindProduct(productId uint) (db.Product, error)
 	StoreProduct(product db.Product) (db.Product, error)
 	DestroyProduct(productId uint) error
+
+	GetShoppingCart(userId uint) db.ShoppingCart
+
+	ValidateTokenExistInStorage(tokenHash string, userId uint) bool
 }

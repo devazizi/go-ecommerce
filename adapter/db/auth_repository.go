@@ -36,3 +36,14 @@ func (db DB) GenerateClientAccessToken(userId uint, expiryData time.Time, title 
 
 	return accessToken, nil
 }
+
+func (db DB) ValidateTokenExistInStorage(tokenHash string, userId uint) bool {
+
+	result := db.store.Where("token = ?", tokenHash).Where("user_id = ?", userId).First(&AccessToken{})
+
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return false
+	}
+
+	return true
+}
