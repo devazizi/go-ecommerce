@@ -27,3 +27,30 @@ func (db DB) FindProduct(productId uint) (Product, error) {
 
 	return product, nil
 }
+
+func (db DB) StoreProduct(product Product) (Product, error) {
+	db.store.Create(&product)
+
+	db.store.
+		Preload("ProductVariations").
+		Preload("ProductCategory").
+		First(&product, product.ID)
+
+	return product, nil
+}
+
+func (db DB) DestroyProduct(productId uint) error {
+
+	err := db.store.Transaction(func(gorm *gorm.DB) error {
+		db.store.Where("product_id = ?", productId).Delete(&ProductVariation{})
+		db.store.Delete(&Product{}, productId)
+
+		return nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

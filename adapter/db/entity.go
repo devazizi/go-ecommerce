@@ -31,7 +31,7 @@ type Product struct {
 	ID                uint   `gorm:"primarykey"`
 	Name              string `gorm:"type:varchar(250)"`
 	Description       string
-	ProductCategoryID int
+	ProductCategoryID uint
 	ProductCategory   ProductCategory
 	ProductVariations []ProductVariation
 	CreatedAt         time.Time      `json:"created_at"`
@@ -44,8 +44,8 @@ type ProductVariation struct {
 	Name      string `gorm:"type:varchar(250)"`
 	ProductID uint
 	Product   Product
-	Price     int
-	Stock     int
+	Price     uint
+	Stock     uint
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index"`

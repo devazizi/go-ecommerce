@@ -59,3 +59,40 @@ func (i Interactor) FindProduct(productId uint) (dto.ProductResponse, error) {
 
 	return createProductResponse(product), nil
 }
+
+func (i Interactor) StoreProduct(ctx context.Context, req dto.StoreProductRequest) (dto.ProductResponse, error) {
+
+	product := db.Product{
+		Name:              req.Name,
+		ProductCategoryID: req.ProductCategoryId,
+		Description:       req.Description,
+	}
+
+	var variations []db.ProductVariation
+
+	for _, variation := range req.Variations {
+		variations = append(variations, db.ProductVariation{
+			Name:  variation.Name,
+			Price: variation.Price,
+			Stock: variation.Stock,
+		})
+	}
+
+	product.ProductVariations = variations
+
+	product, err := i.store.StoreProduct(product)
+
+	if err != nil {
+		return dto.ProductResponse{}, err
+	}
+
+	return createProductResponse(product), nil
+}
+
+func (i Interactor) DestroyProduct(ctx context.Context, productId uint) error {
+	err := i.store.DestroyProduct(productId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

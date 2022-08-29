@@ -7,4 +7,5 @@ type (
 	ValidateLoginUser    func(req dto.LoginUserRequest) error
 
 	ValidateStorePostCategory func(req dto.StorePostCategoryRequest) error
+	ValidateStoreProduct      func(req dto.StoreProductRequest) error
 )

@@ -33,6 +33,8 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 		{
 			apiv1.GET("/products", product.IndexProductController(database))
 			apiv1.GET("/products/:id", product.FindProductController(database))
+			apiv1.POST("/products", product.StoreProductController(database, validator.ValidateStoreProduct))
+			apiv1.DELETE("/products/:id", product.DestroyProductController(database))
 		}
 
 		{
