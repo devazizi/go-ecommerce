@@ -26,7 +26,6 @@ func RegisterRoutes(e *echo.Echo, database db.DB) {
 		}
 
 		{
-			// product_category
 			apiv1.POST("/product-categories", product_category.StoreProductCategoryController(database, validator.ValidateStorePostCategory))
 			apiv1.GET("/product-categories", product_category.IndexProductCategoryController(database))
 			apiv1.GET("/product-categories/:id", product_category.GetProductCategoryController(database))
